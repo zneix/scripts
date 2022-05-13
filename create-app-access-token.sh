@@ -5,4 +5,4 @@ if [ -z $2 ]; then
 	exit 1
 fi
 
-curl -X POST https://id.twitch.tv/oauth2/token -d 'grant_type=client_credentials' -d "client_id=$1" -d "client_secret=$2" | jq
+curl -s -X POST https://id.twitch.tv/oauth2/token -d 'grant_type=client_credentials' -d "client_id=$1" -d "client_secret=$2" | jq
