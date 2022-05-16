@@ -52,7 +52,7 @@ echo nightly > ./bin/modes
 # revert patches
 echo "App built, reverting patches"
 cd "$C2_DIR"
-for x in $(ls "$PATCHES_DIR"/*.patch); do
+for x in $(ls "$PATCHES_DIR"/*.patch | sort -r); do
 	echo "Reverting $x"
 	git apply -R $x || (echo "Failed to revert $x" && exit 1) #TODO: This might be the way to go
 	#git apply -R $x || exit 1
