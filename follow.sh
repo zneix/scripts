@@ -26,7 +26,7 @@ make_query () {
 
     # use "https://httpbin.org/anything" for debugging
     curl -s -X POST "https://gql.twitch.tv/gql" \
-        -H "Client-ID: kimne78kx3ncx6brgo4mv6wki5h1ko" \
+        -H "Client-ID: ue6666qo983tsx6so1t0vnawi233wa" \
         -H "Authorization: OAuth $TWILIGHT_OAUTH" \
         -H "Content-Type: application/json" \
         -d "$QUERY" | jq
@@ -94,9 +94,9 @@ while true; do
     esac
 done
 
-if command -v pass > /dev/null 2>&1 && [ $USER_LOGIN ]; then
+if [ -z $TWILIGHT_OAUTH ] && command -v pass > /dev/null 2>&1 && [ $USER_LOGIN ]; then
     #echo "--user [USER] has been specified, acquiring OAuth from pass"
-    PASS_OAUTH=$(pass twilight/$USER_LOGIN)
+    PASS_OAUTH=$(pass twilight/tv/$USER_LOGIN)
     if [ $PASS_OAUTH ]; then
         TWILIGHT_OAUTH="$PASS_OAUTH"
     fi
@@ -179,8 +179,8 @@ UNFOLLOW_QUERY='{
 }'
 
 if [ $FOLLOW -eq 1 ]; then
-    make_query "$FOLLOW_QUERY" | jq '.data.followUser.follow'
-    #make_query "$FOLLOW_QUERY" | jq '.'
+    #make_query "$FOLLOW_QUERY" | jq '.data.followUser.follow'
+	make_query "$FOLLOW_QUERY" | jq '.'
 else
     make_query "$UNFOLLOW_QUERY" | jq '.data.unfollowUser.follow'
 fi
