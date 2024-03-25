@@ -7,14 +7,14 @@ FOLLOW=1
 
 # help
 usage () {
-    echo "Usage: ./$(basename $0) [-fnh] [-u USER] [-o OAUTH] [-t TARGET] [-T TARGET_ID]" 2>&1
+    echo "Usage: ./$(basename $0) [-fnh] [-u USER_LOGIN] [-o OAUTH] [-t TARGET] [-T TARGET_ID]" 2>&1
     echo 'Follow a user on Twitch from command line through GQL, fuck webchat.'
     echo '  -h              shows help'
     echo '  -f              follows TARGET'
     echo '  -F              unfollows TARGET'
     echo '  -n              enable stream notifications on newly created follow'
     echo '  -N              do not enable stream notifications on newly created follow'
-    echo '  -u [USER]       if pass(1) is present, USER can be specified to retrieve the OAuth token by invoking $(pass twilight/USER)'
+    echo '  -u [USER_LOGIN] if pass(1) is present, USER_LOGIN can be specified to retrieve the OAuth token by invoking $(pass twilight/USER_LOGIN)'
     echo '  -o [OAUTH]      twilight OAuth token used while making GQL requests'
     echo '  -t [TARGET]     Twitch login of the user to follow. It will be first translated to corresponding user ID'
     echo '  -T [TARGET_ID]  Twitch user ID of the user to follow'
@@ -95,7 +95,7 @@ while true; do
 done
 
 if [ -z $TWILIGHT_OAUTH ] && command -v pass > /dev/null 2>&1 && [ $USER_LOGIN ]; then
-    #echo "--user [USER] has been specified, acquiring OAuth from pass"
+    #echo "--user [USER_LOGIN] has been specified, acquiring OAuth from pass"
     PASS_OAUTH=$(pass twilight/tv/$USER_LOGIN)
     if [ $PASS_OAUTH ]; then
         TWILIGHT_OAUTH="$PASS_OAUTH"
@@ -103,7 +103,7 @@ if [ -z $TWILIGHT_OAUTH ] && command -v pass > /dev/null 2>&1 && [ $USER_LOGIN ]
 fi
 
 if [ -z $TWILIGHT_OAUTH ]; then
-    echo "--oauth [OAUTH] (or --user [USER] with OAuth under \$(pass twilight/USER)) needs to be set!"
+    echo "--oauth [OAUTH] (or --user [USER_LOGIN] with OAuth under \$(pass twilight/USER_LOGIN)) needs to be set!"
     exit 2
 fi
 
