@@ -29,7 +29,7 @@ make_query () {
         -H "Client-ID: ue6666qo983tsx6so1t0vnawi233wa" \
         -H "Authorization: OAuth $TWILIGHT_OAUTH" \
         -H "Content-Type: application/json" \
-        -d "$QUERY" | jq
+        -d "$QUERY"
 }
 
 TEMP=$(getopt -o 'hfFnNu:o:t:T:' -l 'help,follow,unfollow,notifications,disable-notifications,user:,oauth:,target:,target-id:' -n 'follow.sh' -- "$@")
@@ -180,7 +180,7 @@ UNFOLLOW_QUERY='{
 
 if [ $FOLLOW -eq 1 ]; then
     #make_query "$FOLLOW_QUERY" | jq '.data.followUser.follow'
-	make_query "$FOLLOW_QUERY" | jq '.'
+	make_query "$FOLLOW_QUERY"
 else
     make_query "$UNFOLLOW_QUERY" | jq '.data.unfollowUser.follow'
 fi
